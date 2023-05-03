@@ -18,16 +18,13 @@
 </template>
 
 <script>
-
-import ls from '@/utils/localStorage'
-
 export default {
   name: "Login",
   data() {
     return {
       form: {
-        name: '龙杰',
-        password: '123456',
+        name: '',
+        password: '',
       },
       rules: {
         name: [
@@ -49,9 +46,9 @@ export default {
           if (!response.status) {
             return this.$message.error(response.message)
           }
-          ls.setItem('token', response.data.access_token)
+          await this.$store.dispatch('updateToken', response.data.access_token)
           const user = await this.$http.user.me()
-          ls.setItem('user', user.data)
+          await this.$store.dispatch('updateUser', user.data)
           this.$message.success('登录成功')
           await this.$router.push({name: 'home'})
         }
@@ -80,6 +77,7 @@ export default {
 
   h3 {
     text-align: center;
+    padding-bottom: 30px;
   }
 
   .btn {

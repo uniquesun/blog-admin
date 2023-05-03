@@ -1,5 +1,7 @@
 import axios from "axios"
-import ls from "@/utils/localStorage";
+import store from '../store'
+import router from "@/router";
+import vue from "vuex";
 
 const instance = axios.create({
   baseURL: 'http://blog.site/admin',
@@ -13,7 +15,7 @@ const instance = axios.create({
 
 instance.interceptors.request.use(function (config) {
 
-  const token = ls.getItem('token')
+  const token = store.state.token
 
   token && (config.headers.Authorization = 'Bearer ' + token)
 
@@ -34,6 +36,13 @@ instance.interceptors.response.use(function (response) {
   // http 300 400 500  exception
   const response_data = error.response.data
   let response_status = error.response.status
+
+  if (response_status == 422) {
+    store.dispatch('updateToken', '')
+    store.dispatch('updateUser', {})
+    router.push('/login')
+  }
+
   if (response_status < 500) {
     return response_data
   }

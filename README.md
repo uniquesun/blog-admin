@@ -1,19 +1,9 @@
 # blogadmin
 
-## Project setup
-```
-npm install
-```
+当前只是完成了功能，代码规范与组件化拆分并没有最佳实践。
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+todo：
+* vue最佳实践&代码规范
+* vue组件化思想
+* vue原理
 
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
